@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sakura Novel Reader</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <h1 class="logo">🌸 Sakura Novel</h1>
+                <nav class="nav">
+                    <a href="#" class="nav-link active" data-page="home">Home</a>
+                    <a href="#" class="nav-link" data-page="genres">Genres</a>
+                    <a href="#" class="nav-link" data-page="tags">Tags</a>
+                    <a href="#" class="nav-link" data-page="list">Daftar Novel</a>
+                </nav>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Cari novel..." class="search-input">
+                    <button id="searchBtn" class="search-btn">🔍</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Loading Spinner -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Loading...</p>
+            </div>
+
+            <!-- Home Page -->
+            <div id="homePage" class="page active">
+                <h2 class="page-title">Novel Terbaru</h2>
+                <div class="pagination-top">
+                    <button id="prevPageHome" class="btn-pagination" disabled>◀ Previous</button>
+                    <span id="currentPageHome" class="page-info">Page 1</span>
+                    <button id="nextPageHome" class="btn-pagination">Next ▶</button>
+                </div>
+                <div id="novelGrid" class="novel-grid"></div>
+                <div class="pagination-bottom">
+                    <button id="prevPageHome2" class="btn-pagination" disabled>◀ Previous</button>
+                    <span id="currentPageHome2" class="page-info">Page 1</span>
+                    <button id="nextPageHome2" class="btn-pagination">Next ▶</button>
+                </div>
+            </div>
+
+            <!-- Search Results Page -->
+            <div id="searchPage" class="page">
+                <h2 class="page-title">Hasil Pencarian: <span id="searchQuery"></span></h2>
+                <div id="searchResults" class="novel-grid"></div>
+            </div>
+
+            <!-- Genres Page -->
+            <div id="genresPage" class="page">
+                <h2 class="page-title">Genres</h2>
+                <div id="genresList" class="genres-grid"></div>
+            </div>
+
+            <!-- Genre Detail Page -->
+            <div id="genreDetailPage" class="page">
+                <h2 class="page-title">Genre: <span id="genreName"></span></h2>
+                <div class="pagination-top">
+                    <button id="prevPageGenre" class="btn-pagination" disabled>◀ Previous</button>
+                    <span id="currentPageGenre" class="page-info">Page 1</span>
+                    <button id="nextPageGenre" class="btn-pagination">Next ▶</button>
+                </div>
+                <div id="genreNovels" class="novel-grid"></div>
+                <div class="pagination-bottom">
+                    <button id="prevPageGenre2" class="btn-pagination" disabled>◀ Previous</button>
+                    <span id="currentPageGenre2" class="page-info">Page 1</span>
+                    <button id="nextPageGenre2" class="btn-pagination">Next ▶</button>
+                </div>
+            </div>
+
+            <!-- Tags Page -->
+            <div id="tagsPage" class="page">
+                <h2 class="page-title">Tags</h2>
+                <div id="tagsList" class="tags-grid"></div>
+            </div>
+
+            <!-- Tag Detail Page -->
+            <div id="tagDetailPage" class="page">
+                <h2 class="page-title">Tag: <span id="tagName"></span></h2>
+                <div class="pagination-top">
+                    <button id="prevPageTag" class="btn-pagination" disabled>◀ Previous</button>
+                    <span id="currentPageTag" class="page-info">Page 1</span>
+                    <button id="nextPageTag" class="btn-pagination">Next ▶</button>
+                </div>
+                <div id="tagNovels" class="novel-grid"></div>
+                <div class="pagination-bottom">
+                    <button id="prevPageTag2" class="btn-pagination" disabled>◀ Previous</button>
+                    <span id="currentPageTag2" class="page-info">Page 1</span>
+                    <button id="nextPageTag2" class="btn-pagination">Next ▶</button>
+                </div>
+            </div>
+
+            <!-- Novel List Page -->
+            <div id="listPage" class="page">
+                <h2 class="page-title">Daftar Semua Novel</h2>
+                <div id="novelList" class="novel-list"></div>
+            </div>
+
+            <!-- Novel Detail Page -->
+            <div id="detailPage" class="page">
+                <button id="backBtn" class="back-btn">← Kembali</button>
+                <div id="novelDetail" class="novel-detail"></div>
+            </div>
+
+            <!-- Reader Page -->
+            <div id="readerPage" class="page">
+                <button id="backToDetailBtn" class="back-btn">← Kembali ke Detail</button>
+                <div id="readerContent" class="reader-content"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Sakura Novel Reader. Powered by Sanka Vollerei API.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
