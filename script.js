@@ -1,5 +1,6 @@
-// API Base URL
-const API_BASE = 'https://www.sankavollerei.com/novel/sakuranovel';
+// API Base URL - Using Vercel Serverless Function as proxy
+const USE_PROXY = window.location.hostname !== 'localhost';
+const API_BASE = USE_PROXY ? '/api/proxy?endpoint=' : 'https://www.sankavollerei.com/novel/sakuranovel';
 
 // State Management
 const state = {
@@ -55,16 +56,45 @@ function updateNavLinks(pageName) {
     });
 }
 
+function showError(message) {
+    const container = document.querySelector('.page.active .novel-grid, .page.active > div:first-of-type');
+    if (container) {
+        container.innerHTML = `
+            <div style="text-align: center; padding: 3rem; color: #ff69b4;">
+                <h3>⚠️ Error</h3>
+                <p>${message}</p>
+                <button onclick="location.reload()" style="margin-top: 1rem; padding: 0.8rem 2rem; background: linear-gradient(135deg, #ff69b4, #ff1493); border: none; border-radius: 25px; color: white; cursor: pointer; font-weight: bold;">
+                    🔄 Refresh Page
+                </button>
+            </div>
+        `;
+    }
+}
+
 async function fetchAPI(endpoint) {
     try {
-        const response = await fetch(`${API_BASE}${endpoint}`);
+        const url = USE_PROXY ? `${API_BASE}${encodeURIComponent(endpoint)}` : `${API_BASE}${endpoint}`;
+        
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
         const data = await response.json();
+        
         if (data.status === 'success') {
             return data;
         }
-        throw new Error('API request failed');
+        throw new Error(data.message || 'API request failed');
     } catch (error) {
         console.error('API Error:', error);
+        showError(`Gagal memuat data: ${error.message}<br>Silakan coba lagi atau refresh halaman.`);
         return null;
     }
 }
@@ -75,10 +105,12 @@ async function loadHomePage(page = 1) {
     const data = await fetchAPI(`/home?page=${page}`);
     hideLoading();
 
-    if (data && data.data.results) {
+    if (data && data.data && data.data.results) {
         state.homePage = page;
         displayNovels(data.data.results, 'novelGrid');
         updateHomePagination(data.data.pagination);
+    } else {
+        showError('Tidak dapat memuat data novel. Pastikan koneksi internet Anda stabil.');
     }
 }
 
